@@ -115,6 +115,17 @@ class Authentication extends StatelessWidget {
   }
 
   void _showErrorDialog(BuildContext context, String title, Exception e) {
+    print((e as dynamic).code);
+    String error;
+
+    ///FirebaseAuthException
+    switch ((e as dynamic).code) {
+      case 'invalid-email':
+        error = 'Invalid Email Address';
+        break;
+      default:
+        error = (e as dynamic).code;
+    }
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -127,7 +138,8 @@ class Authentication extends StatelessWidget {
             child: ListBody(
               children: <Widget>[
                 Text(
-                  '${(e as dynamic).message}',
+                  // '${(e as dynamic).message}',
+                  '$error',
                   style: TextStyle(fontSize: 18),
                 ),
               ],
